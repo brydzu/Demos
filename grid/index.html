@@ -9,9 +9,9 @@
 		<img tabindex=0 src="grid_4.png" />
 		<img tabindex=0 src="grid_5.png" />
 		<img tabindex=0 src="grid_6.png" />
-		<img tabindex=0 src="grid_7.png" />
+		<img tabindex=0 src="grid_7.png" class="hidden-piece" />
 		<img tabindex=0 src="grid_8.png" />
-		<img tabindex=0 src="grid_1.png" class="hidden-piece" />
+		<img tabindex=0 src="grid_1.png" />
 	</div>
 	<aside class="puzzle-score">
 		<p>Clicks: <span id="clicks">0</span></p>
@@ -20,7 +20,6 @@
 </section>
 
 <style>
-
 	.puzzle-game-wrapper {
 		display: grid;
 		grid-template-rows: 10vh 50vh 40vh;
@@ -108,7 +107,7 @@
 	var pieces = [...document.querySelectorAll('.puzzle-game > img')];
 	var clickScore = document.getElementById('clicks');
 	var shuffledPieces = pieces;
-	var hiddenPiece = pieces[8];
+	var hiddenPiece = pieces[6];
 	var clickCount = 0;
 	var isDone = true;
 	
@@ -138,7 +137,7 @@
 	/// =============================================================================================
 	function updatePositions() {
 		shuffledPieces.forEach((piece,index) => {
-			piece.style.gridArea = `${Math.floor(1+index/3)} / ${1+index%3}`
+			piece.parentNode.appendChild(piece);
 		})
 	}
 	
