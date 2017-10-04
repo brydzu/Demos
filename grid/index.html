@@ -9,9 +9,9 @@
 		<img tabindex=0 src="grid_4.png" />
 		<img tabindex=0 src="grid_5.png" />
 		<img tabindex=0 src="grid_6.png" />
-		<img tabindex=0 src="grid_7.png" class="hidden-piece" />
+		<img tabindex=0 src="grid_7.png" />
 		<img tabindex=0 src="grid_8.png" />
-		<img tabindex=0 src="grid_1.png" />
+		<img tabindex=0 src="grid_9.png" />
 	</div>
 	<aside class="puzzle-score">
 		<p>Clicks: <span id="clicks">0</span></p>
@@ -40,11 +40,12 @@
 		max-width: 35vw;
 		grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
 		border: 10px solid cornflowerblue;
+		background: rgba(0, 0, 0, .25);
 	}
 
 	.puzzle-game > img {
 		width: 100%;
-		height: 100%;
+		--height: 100%;
 		outline: 1px solid black;
 		outline-offset: -1px;
 	}
@@ -81,7 +82,7 @@
 			grid-template-rows: 1fr 1fr;
 
 			grid-template-areas: "game"
-								"score";
+								 "score";
 		}
 
 		.puzzle-score {
@@ -125,8 +126,7 @@
 		clickCount = 0;
 		shuffledPieces = shuffle([...pieces]);
 		updatePositions();
-		checkIfHasWon();
-		
+		checkIfHasWon();		
 	}
 	
 	reset();
@@ -151,6 +151,7 @@
 				reset();
 			} else {
 				isDone = true;
+				hiddenPiece.style.opacity = '1';
 				alert("Finished in " + clickCount);
 			}
 		}
