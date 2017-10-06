@@ -3,15 +3,15 @@
 <section class="puzzle-game-wrapper">
 	<div id="a11y-update"></div>
 	<div class="puzzle-game">
-		<img tabindex=0 src="grid_1.png" />
-		<img tabindex=0 src="grid_2.png" />
-		<img tabindex=0 src="grid_3.png" />
-		<img tabindex=0 src="grid_4.png" />
-		<img tabindex=0 src="grid_5.png" />
-		<img tabindex=0 src="grid_6.png" />
-		<img tabindex=0 src="grid_7.png" />
-		<img tabindex=0 src="grid_8.png" />
-		<img tabindex=0 src="grid_9.png" />
+		<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="One" />
+		<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="Two" />
+		<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="Three" />
+		<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="Four" />
+		<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="Five" />
+		<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="Six" />
+		<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="Seven" />
+		<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="Eight" />
+		<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="Nine" />
 	</div>
 	<aside class="puzzle-score">
 		<p>Clicks: <span id="clicks">0</span></p>
@@ -22,14 +22,18 @@
 <style>
 	.puzzle-game-wrapper {
 		display: grid;
-		grid-template-rows: 10vh 50vh 40vh;
+		min-height: 50vh;
+		max-height: 80vh;
+		grid-template-rows: 10% 50% 40%;
+		padding: 10px;
 		grid-template-columns: 50% 50%;
 
 		grid-template-areas: ". ."
 		                     "game score"
 		                     "game palm-tree";
 		background-image: url(background.svg);
-		background-size: cover;
+		background-size: fill;
+		border: 2px solid black;
 	}
 
 	.puzzle-game { 
@@ -40,12 +44,11 @@
 		max-width: 35vw;
 		grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
 		border: 10px solid cornflowerblue;
-		background: rgba(0, 0, 0, .25);
+		background: rgba(0, 0, 0, .5);
 	}
 
 	.puzzle-game > img {
 		width: 100%;
-		--height: 100%;
 		outline: 1px solid black;
 		outline-offset: -1px;
 	}
@@ -78,11 +81,13 @@
 
 	@media screen and (max-width: 800px) {
 		.puzzle-game-wrapper {
-			grid-template-columns: 100%;
+			grid-template-columns: 50%;
 			grid-template-rows: 1fr 1fr;
-
+			max-height: unset;
 			grid-template-areas: "game"
 								 "score";
+			background-size: fill;
+			background-repeat: no-repeat;
 		}
 
 		.puzzle-score {
@@ -126,6 +131,7 @@
 		clickCount = 0;
 		shuffledPieces = shuffle([...pieces]);
 		updatePositions();
+		highlightMoveablePieces();
 		checkIfHasWon();		
 	}
 	
@@ -139,6 +145,83 @@
 		shuffledPieces.forEach((piece,index) => {
 			piece.parentNode.appendChild(piece);
 		})
+	}
+
+	function whereIsHiddenPiece(requested) {
+		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
+		var colOfHiddenPiece = (indexOfHiddenPiece % 3) + 1;
+		var rowOfHiddenPiece = (Math.floor(indexOfHiddenPiece / 3)) + 1;
+
+		if(requested) {
+			say("The hidden piece is in row " + rowOfHiddenPiece + " and in column " + colOfHiddenPiece);
+		}
+	}
+
+	function currentState(requested) {
+		var row1 = "Row1: ";
+		var row2 = "Row2: ";
+		var row3 = "Row3: ";
+
+		shuffledPieces.forEach((piece, index) => {
+			switch(true) {
+				case (index <= 2): {
+					row1 += "Tile " + piece.getAttribute("aria-label") + " ";
+					break;
+				}
+				case (index > 2 && index <= 5): {
+					row2 += "Tile " + piece.getAttribute("aria-label") + " ";
+					break;
+				}
+				case (index > 5 && index <= 8): {
+					row3 += "Tile " + piece.getAttribute("aria-label") + " ";
+					break;
+				}
+			}
+		});
+		
+		if(requested) {
+			say(row1);
+			say(row2);
+			say(row3);
+		}
+	}
+
+	function say(statement) {
+		if(window.speechSynthesis.speak) {
+			window.speechSynthesis.speak(new SpeechSynthesisUtterance(statement));
+		}
+	}
+
+	function whereAreTheMoveablePieces(requested) {
+		var speech = "Tiles that can move: ";
+		var pieces = document.querySelectorAll('.piece-is-moveable');
+		pieces.forEach((piece, index) => {
+			speech += "Tile " + piece.getAttribute("aria-label") + " ";
+		});
+		say(speech);
+	} 
+
+	function highlightMoveablePieces() {
+		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
+		var rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
+		var colOfHiddenPiece = indexOfHiddenPiece % 3;
+
+		for(var piece of pieces) {
+			var indexOfCurrentPiece = shuffledPieces.indexOf(piece);
+			var rowOfCurrentPiece = Math.floor(indexOfCurrentPiece / 3);
+			var colOfCurrentPiece = indexOfCurrentPiece % 3;
+
+			if((colOfCurrentPiece == colOfHiddenPiece && Math.abs(rowOfHiddenPiece - rowOfCurrentPiece) == 1)
+				|| (rowOfCurrentPiece == rowOfHiddenPiece && Math.abs(colOfHiddenPiece - colOfCurrentPiece) == 1)
+			  ) {
+				piece.style.outline = "2px solid white";
+				piece.classList.add('piece-is-moveable');
+			}
+			else {
+				piece.style.outline = "none";
+				piece.classList.remove('piece-is-moveable');
+			}
+		}
 	}
 	
 	/// =============================================================================================
@@ -184,6 +267,7 @@
 			shuffledPieces[indexOfHiddenPiece] = clickedPiece;
 			shuffledPieces[indexOfClickedPiece] = hiddenPiece;
 			updatePositions();
+			highlightMoveablePieces();
 			checkIfHasWon();
 		}
 	}
@@ -196,27 +280,44 @@
 		
 		switch(event.key) {
 			case 'Down': case 'ArrowDown': {
-				var rowOfClickedPiece = rowOfHiddenPiece - 1;
-				var colOfClickedPiece = colOfHiddenPiece;
+				let rowOfClickedPiece = rowOfHiddenPiece - 1;
+				let colOfClickedPiece = colOfHiddenPiece;
 				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
 				break;
 			}
 			case 'Up': case 'ArrowUp': {
-				var rowOfClickedPiece = rowOfHiddenPiece + 1;
-				var colOfClickedPiece = colOfHiddenPiece;
+				let rowOfClickedPiece = rowOfHiddenPiece + 1;
+				let colOfClickedPiece = colOfHiddenPiece;
 				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
 				break;
 			}
 			case 'Right': case 'ArrowRight': {
-				var rowOfClickedPiece = rowOfHiddenPiece;
-				var colOfClickedPiece = colOfHiddenPiece - 1;
+				let rowOfClickedPiece = rowOfHiddenPiece;
+				let colOfClickedPiece = colOfHiddenPiece - 1;
 				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
 				break;
 			}
 			case 'Left': case 'ArrowLeft': {
-				var rowOfClickedPiece = rowOfHiddenPiece;
-				var colOfClickedPiece = colOfHiddenPiece + 1;
+				let rowOfClickedPiece = rowOfHiddenPiece;
+				let colOfClickedPiece = colOfHiddenPiece + 1;
 				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
+				break;
+			}
+			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {
+				let clickedPiece = document.getElementById('piece-' + parseInt(event.key));
+				var indexOfClickedPiece = shuffledPieces.indexOf(clickedPiece);
+				break;
+			}
+			case 'c': {
+				currentState(true);
+				break;
+			}
+			case 'h': {
+				whereIsHiddenPiece(true);
+				break;
+			}
+			case 'm': {
+				whereAreTheMoveablePieces(true);
 				break;
 			}
 		}
