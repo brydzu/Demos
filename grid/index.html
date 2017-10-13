@@ -1,54 +1,77 @@
 <!doctype html>
 <html>
-<head></head>
+<head>
+		<link rel="stylesheet" href="https://edgeportal.blob.core.windows.net/media/demotemplate.css">
+</head>
 <body>
-	<section>
-		<h1>CSS Grid Paradise Puzzle</h1>
-		<p>The game consists of a 3 by 3 grid with a shuffled set of images.
-		The goal of the game is to move one of the images that is next to the open
-		space into the open space. Continue this process until the order of the images is sequential.
-		You wil if you have the following:</p>
-		<p>Row 1: One Two Three</p>
-		<p>Row 2: Four Five Six</p>
-		<p>Row 3: Seven Eight Nine</p>
-		<p>Helpful keyboard shortcuts:</p>
-		<dl>
-			<dt>C</dt>
-			<dd>This will audibly outline the current state of the game telling you which pieces are in each row</dd>
-			<dt>H</dt>
-			<dd>This will audibly tell you in which row and column the open space is</dd>
-			<dt>M</dt>
-			<dd>This will audibly tell you which pieces are possible to move into the open space</dd>
-			<dt>Arrow Keys</dt>
-			<dt>This will move the piece that is able to move in that direction. For example, if you press the up arrow key the piece that is directly below the open space will move up.</dt>
-			<dt>Numeric keys 1 through 9</dt>
-			<dd>This will try to move the image with that index</dd>
-		</dl>
-		<button id="toggle-audio">Turn <span>on</span> sounds for successful/uncessful moves</button>
-	</section>
-<section class="puzzle-game-wrapper">
-	<div class="puzzle-game">
-		<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="One" />
-		<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="Two" />
-		<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="Three" />
-		<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="Four" />
-		<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="Five" />
-		<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="Six" />
-		<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="Seven" />
-		<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="Eight" />
-		<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="Nine" />
-	</div>
-	<aside class="puzzle-score">
-		<p>Clicks: <span id="clicks">0</span></p>
-	</aside>
-	<div class="palm-tree" aria-role="presentation"></div>
-</section>
+	<main>
+		<section id="intro">
+				<h1>CSS Grid Paradise Puzzle</h1>
+				<p>The game consists of a 3 by 3 grid with a shuffled set of images.
+				The goal of the game is to move one of the images that is next to the open
+				space into the open space. Continue this process until the order of the images is sequential.
+				You wil if you have the following:</p>
+				<p>Row 1: One Two Three</p>
+				<p>Row 2: Four Five Six</p>
+				<p>Row 3: Seven Eight Nine</p>
+				<p>Helpful keyboard shortcuts:</p>
+				<dl>
+					<dt>C</dt>
+						<dd>This will audibly outline the current state of the game telling you which pieces are in each row</dd>
+					<dt>H</dt>
+						<dd>This will audibly tell you in which row and column the open space is</dd>
+					<dt>M</dt>
+						<dd>This will audibly tell you which pieces are possible to move into the open space</dd>
+					<dt>Arrow Keys</dt>
+						<dd>This will move the piece that is able to move in that direction. For example, if you press the up arrow key the piece that is directly below the open space will move up.</dd>
+					<dt>Numeric keys 1 through 9</dt>
+						<dd>This will try to move the image with that index</dd>
+				</dl>
+				<button id="toggle-audio">Turn <span>on</span> sounds for successful/uncessful moves</button>
+			</section>
+			<section class="puzzle-game-wrapper">
+				<div class="puzzle-game">
+					<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="One" />
+					<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="Two" />
+					<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="Three" />
+					<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="Four" />
+					<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="Five" />
+					<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="Six" />
+					<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="Seven" />
+					<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="Eight" />
+					<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="Nine" />
+				</div>
+				<aside class="puzzle-score">
+					<p>Clicks: <span id="clicks">0</span></p>
+				</aside>
+				<div class="palm-tree" aria-role="presentation"></div>
+			</section>
+			<article>
+				<h1>Building the Puzzle</h1>
+			</article>
+	</main>	
 
 <style>
+	main {
+		display: grid;
+		grid-template-columns: 25% 50% 25%;
+		grid-template-rows: 1fr minmax(50vh, 80vh) 1fr;
+		grid-template-areas: ". intro ."
+							 "game game game"
+							 ". tutorial .";
+	}
+
+	#intro {
+		grid-area: intro;
+	}
+
+	article {
+		grid-area: tutorial;
+	}
+
 	.puzzle-game-wrapper {
 		display: grid;
-		min-height: 50vh;
-		max-height: 80vh;
+		grid-area: game;
 		grid-template-rows: 10% 50% 40%;
 		padding: 10px;
 		grid-template-columns: 50% 50%;
@@ -76,6 +99,7 @@
 		width: 100%;
 		outline: 1px solid black;
 		outline-offset: -1px;
+		margin: 0;
 	}
 
 	.puzzle-game > .hidden-piece {
@@ -134,7 +158,6 @@
 </style>
 
 <script>
-
 	var pieces = [...document.querySelectorAll('.puzzle-game > img')];
 	var clickScore = document.getElementById('clicks');
 	var soundButton = document.getElementById('toggle-audio');
