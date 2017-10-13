@@ -1,7 +1,32 @@
 <!doctype html>
-
+<html>
+<head></head>
+<body>
+	<section>
+		<h1>CSS Grid Paradise Puzzle</h1>
+		<p>The game consists of a 3 by 3 grid with a shuffled set of images.
+		The goal of the game is to move one of the images that is next to the open
+		space into the open space. Continue this process until the order of the images is sequential.
+		You wil if you have the following:</p>
+		<p>Row 1: One Two Three</p>
+		<p>Row 2: Four Five Six</p>
+		<p>Row 3: Seven Eight Nine</p>
+		<p>Helpful keyboard shortcuts:</p>
+		<dl>
+			<dt>C</dt>
+			<dd>This will audibly outline the current state of the game telling you which pieces are in each row</dd>
+			<dt>H</dt>
+			<dd>This will audibly tell you in which row and column the open space is</dd>
+			<dt>M</dt>
+			<dd>This will audibly tell you which pieces are possible to move into the open space</dd>
+			<dt>Arrow Keys</dt>
+			<dt>This will move the piece that is able to move in that direction. For example, if you press the up arrow key the piece that is directly below the open space will move up.</dt>
+			<dt>Numeric keys 1 through 9</dt>
+			<dd>This will try to move the image with that index</dd>
+		</dl>
+		<button id="toggle-audio">Turn <span>on</span> sounds for successful/uncessful moves</button>
+	</section>
 <section class="puzzle-game-wrapper">
-	<div id="a11y-update"></div>
 	<div class="puzzle-game">
 		<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="One" />
 		<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="Two" />
@@ -112,19 +137,23 @@
 
 	var pieces = [...document.querySelectorAll('.puzzle-game > img')];
 	var clickScore = document.getElementById('clicks');
+	var soundButton = document.getElementById('toggle-audio');
 	var shuffledPieces = pieces;
 	var hiddenPiece = pieces[6];
 	var clickCount = 0;
 	var isDone = true;
+	var audio = false;
+	var success = new Audio('success.mp3');
+	var fail = new Audio('fail.mp3');
 	
 	addEventListener('keydown', handleKeyDown);
+	soundButton.addEventListener('click', toggleAudio);
 	for(var piece of pieces) {
 		piece.addEventListener('click', trySwapWithHiddenPiece);
 		piece.addEventListener('keypress', trySwapWithHiddenPiece);
 	}
 	
-	function reset() {
-	
+	function reset() {	
 		isDone = false;
 		hiddenPiece.style.opacity = '0';
 		
@@ -133,6 +162,11 @@
 		updatePositions();
 		highlightMoveablePieces();
 		checkIfHasWon();		
+	}
+
+	function updateToggleButtonText(audioText) {
+		let span = soundButton.querySelector('span');
+		span.innerText = audioText;
 	}
 	
 	reset();
@@ -145,6 +179,23 @@
 		shuffledPieces.forEach((piece,index) => {
 			piece.parentNode.appendChild(piece);
 		})
+	}
+
+	function toggleAudio() {
+		let audioText = "";
+		switch(audio) {
+			case true: {
+				audio = false;
+				audioText = "on";
+				break;
+			}
+			case false: {
+				audio = true;
+				audioText = "off";
+				break;
+			}
+		}
+		updateToggleButtonText(audioText);
 	}
 
 	function whereIsHiddenPiece(requested) {
@@ -266,9 +317,19 @@
 			clickScore.textContent = clickCount;
 			shuffledPieces[indexOfHiddenPiece] = clickedPiece;
 			shuffledPieces[indexOfClickedPiece] = hiddenPiece;
+
+			if(audio) {
+				success.play();
+			}
+			
 			updatePositions();
 			highlightMoveablePieces();
 			checkIfHasWon();
+		}
+		else {
+			if(audio) {
+				fail.play();
+			}
 		}
 	}
 	
@@ -328,6 +389,14 @@
 		}
 	}
 
+	addEventListener('play', playAudio(evt), true);
+	function playAudio(audioVar) {
+		if(window.$_currentlyPlaying) {
+			window.$_currentlyPlaying.pause();
+		}
+		window.$_currentlyPlaying = evt.target;
+	}
+
 	/// =============================================================================================
 	/// see https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
 	/// =============================================================================================
@@ -351,3 +420,5 @@
 		return array;
 	}
 </script>
+</body>
+</html>
