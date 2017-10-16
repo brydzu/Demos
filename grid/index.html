@@ -1,7 +1,9 @@
 <!doctype html>
 <html>
 <head>
+		<title>CSS Grid Paradize Puzzle</title>
 		<link rel="stylesheet" href="https://edgeportal.blob.core.windows.net/media/demotemplate.css">
+		<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<main>
@@ -10,10 +12,10 @@
 				<p>The game consists of a 3 by 3 grid with a shuffled set of images.
 				The goal of the game is to move one of the images that is next to the open
 				space into the open space. Continue this process until the order of the images is sequential.
-				You wil if you have the following:</p>
-				<p>Row 1: One Two Three</p>
-				<p>Row 2: Four Five Six</p>
-				<p>Row 3: Seven Eight Nine</p>
+				If you're doing this game audibly, you will hear the following completed quote by Scott Hamilton.</p>
+				<p>Row 1: The only disability</p>
+				<p>Row 2: in life is</p>
+				<p>Row 3: a bad attitude</p>
 				<p>Helpful keyboard shortcuts:</p>
 				<dl>
 					<dt>C</dt>
@@ -31,15 +33,15 @@
 			</section>
 			<section class="puzzle-game-wrapper">
 				<div class="puzzle-game">
-					<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="One" />
-					<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="Two" />
-					<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="Three" />
-					<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="Four" />
-					<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="Five" />
-					<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="Six" />
-					<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="Seven" />
-					<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="Eight" />
-					<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="Nine" />
+					<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="The" />
+					<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="only" />
+					<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="disability" />
+					<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="in" />
+					<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="life" />
+					<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="is" />
+					<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="a" />
+					<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="bad" />
+					<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="attitude" />
 				</div>
 				<aside class="puzzle-score">
 					<p>Clicks: <span id="clicks">0</span></p>
@@ -49,399 +51,8 @@
 			<article>
 				<h1>Building the Puzzle</h1>
 			</article>
-	</main>	
+	</main>
 
-<style>
-	main {
-		display: grid;
-		grid-template-columns: 25% 50% 25%;
-		grid-template-rows: 1fr minmax(50vh, 80vh) 1fr;
-		grid-template-areas: ". intro ."
-							 "game game game"
-							 ". tutorial .";
-	}
-
-	#intro {
-		grid-area: intro;
-	}
-
-	article {
-		grid-area: tutorial;
-	}
-
-	.puzzle-game-wrapper {
-		display: grid;
-		grid-area: game;
-		grid-template-rows: 10% 50% 40%;
-		padding: 10px;
-		grid-template-columns: 50% 50%;
-
-		grid-template-areas: ". ."
-		                     "game score"
-		                     "game palm-tree";
-		background-image: url(background.svg);
-		background-size: fill;
-		border: 2px solid black;
-	}
-
-	.puzzle-game { 
-		display: grid;
-		grid-area: game;
-		align-self: start;
-		justify-self: center;
-		max-width: 35vw;
-		grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
-		border: 10px solid cornflowerblue;
-		background: rgba(0, 0, 0, .5);
-	}
-
-	.puzzle-game > img {
-		width: 100%;
-		outline: 1px solid black;
-		outline-offset: -1px;
-		margin: 0;
-	}
-
-	.puzzle-game > .hidden-piece {
-		opacity:0;
-	}
-
-	.puzzle-game > img:focus {
-		outline-color: red;
-	}
-
-	.puzzle-score {
-		grid-area: score;
-		font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-		font-size: 2em;
-		font-weight: normal;
-		color: white;
-	}
-
-	.puzzle-score p {
-		margin: 0;
-	}
-
-	.palm-tree {
-		grid-area: palm-tree;
-		background-image: url(grid_game_extra_palm.png);
-		background-repeat: no-repeat;
-	}
-
-	@media screen and (max-width: 800px) {
-		.puzzle-game-wrapper {
-			grid-template-columns: 50%;
-			grid-template-rows: 1fr 1fr;
-			max-height: unset;
-			grid-template-areas: "game"
-								 "score";
-			background-size: fill;
-			background-repeat: no-repeat;
-		}
-
-		.puzzle-score {
-			width: 90%;
-		    justify-self: center;
-		}
-
-		.puzzle-game {
-			width: 90%;
-			max-width: 90%;
-			margin-top: 10px;
-		}
-
-		.palm-tree {
-			display: none;
-		}
-	}
-
-</style>
-
-<script>
-	var pieces = [...document.querySelectorAll('.puzzle-game > img')];
-	var clickScore = document.getElementById('clicks');
-	var soundButton = document.getElementById('toggle-audio');
-	var shuffledPieces = pieces;
-	var hiddenPiece = pieces[6];
-	var clickCount = 0;
-	var isDone = true;
-	var audio = false;
-	var success = new Audio('success.mp3');
-	var fail = new Audio('fail.mp3');
-	
-	addEventListener('keydown', handleKeyDown);
-	soundButton.addEventListener('click', toggleAudio);
-	for(var piece of pieces) {
-		piece.addEventListener('click', trySwapWithHiddenPiece);
-		piece.addEventListener('keypress', trySwapWithHiddenPiece);
-	}
-	
-	function reset() {	
-		isDone = false;
-		hiddenPiece.style.opacity = '0';
-		
-		clickCount = 0;
-		shuffledPieces = shuffle([...pieces]);
-		updatePositions();
-		highlightMoveablePieces();
-		checkIfHasWon();		
-	}
-
-	function updateToggleButtonText(audioText) {
-		let span = soundButton.querySelector('span');
-		span.innerText = audioText;
-	}
-	
-	reset();
-	updatePositions();
-	
-	/// =============================================================================================
-	/// update the grid area of every piece of the puzzle
-	/// =============================================================================================
-	function updatePositions() {
-		shuffledPieces.forEach((piece,index) => {
-			piece.parentNode.appendChild(piece);
-		})
-	}
-
-	function toggleAudio() {
-		let audioText = "";
-		switch(audio) {
-			case true: {
-				audio = false;
-				audioText = "on";
-				break;
-			}
-			case false: {
-				audio = true;
-				audioText = "off";
-				break;
-			}
-		}
-		updateToggleButtonText(audioText);
-	}
-
-	function whereIsHiddenPiece(requested) {
-		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
-		var colOfHiddenPiece = (indexOfHiddenPiece % 3) + 1;
-		var rowOfHiddenPiece = (Math.floor(indexOfHiddenPiece / 3)) + 1;
-
-		if(requested) {
-			say("The hidden piece is in row " + rowOfHiddenPiece + " and in column " + colOfHiddenPiece);
-		}
-	}
-
-	function currentState(requested) {
-		var row1 = "Row1: ";
-		var row2 = "Row2: ";
-		var row3 = "Row3: ";
-
-		shuffledPieces.forEach((piece, index) => {
-			switch(true) {
-				case (index <= 2): {
-					row1 += "Tile " + piece.getAttribute("aria-label") + " ";
-					break;
-				}
-				case (index > 2 && index <= 5): {
-					row2 += "Tile " + piece.getAttribute("aria-label") + " ";
-					break;
-				}
-				case (index > 5 && index <= 8): {
-					row3 += "Tile " + piece.getAttribute("aria-label") + " ";
-					break;
-				}
-			}
-		});
-		
-		if(requested) {
-			say(row1);
-			say(row2);
-			say(row3);
-		}
-	}
-
-	function say(statement) {
-		if(window.speechSynthesis.speak) {
-			window.speechSynthesis.speak(new SpeechSynthesisUtterance(statement));
-		}
-	}
-
-	function whereAreTheMoveablePieces(requested) {
-		var speech = "Tiles that can move: ";
-		var pieces = document.querySelectorAll('.piece-is-moveable');
-		pieces.forEach((piece, index) => {
-			speech += "Tile " + piece.getAttribute("aria-label") + " ";
-		});
-		say(speech);
-	} 
-
-	function highlightMoveablePieces() {
-		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
-		var rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
-		var colOfHiddenPiece = indexOfHiddenPiece % 3;
-
-		for(var piece of pieces) {
-			var indexOfCurrentPiece = shuffledPieces.indexOf(piece);
-			var rowOfCurrentPiece = Math.floor(indexOfCurrentPiece / 3);
-			var colOfCurrentPiece = indexOfCurrentPiece % 3;
-
-			if((colOfCurrentPiece == colOfHiddenPiece && Math.abs(rowOfHiddenPiece - rowOfCurrentPiece) == 1)
-				|| (rowOfCurrentPiece == rowOfHiddenPiece && Math.abs(colOfHiddenPiece - colOfCurrentPiece) == 1)
-			  ) {
-				piece.style.outline = "2px solid white";
-				piece.classList.add('piece-is-moveable');
-			}
-			else {
-				piece.style.outline = "none";
-				piece.classList.remove('piece-is-moveable');
-			}
-		}
-	}
-	
-	/// =============================================================================================
-	/// checks whether all pieces are in the correct order
-	/// =============================================================================================
-	function checkIfHasWon() {
-		var hasWon = shuffledPieces.every((piece,index) => (pieces[index] == piece));
-		if(hasWon) {
-			if(clickCount == 0) {
-				reset();
-			} else {
-				isDone = true;
-				hiddenPiece.style.opacity = '1';
-				alert("Finished in " + clickCount);
-			}
-		}
-	}
-	
-	/// =============================================================================================
-	/// attempts to swap the clicked piece with the hidden piece
-	/// =============================================================================================
-	function trySwapWithHiddenPiece() {
-		
-		var clickedPiece = this;
-		clickedPiece.focus();
-	
-		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
-		var indexOfClickedPiece = shuffledPieces.indexOf(clickedPiece);
-		var rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
-		var colOfHiddenPiece = indexOfHiddenPiece % 3;
-		var rowOfClickedPiece = Math.floor(indexOfClickedPiece / 3);
-		var colOfClickedPiece = indexOfClickedPiece % 3;
-		
-		var isMoveValid = (
-			false
-			|| (colOfClickedPiece == colOfHiddenPiece && Math.abs(rowOfHiddenPiece - rowOfClickedPiece) == 1)
-			|| (rowOfClickedPiece == rowOfHiddenPiece && Math.abs(colOfHiddenPiece - colOfClickedPiece) == 1)
-		);
-		
-		if(isMoveValid && !isDone) {
-			clickCount++;
-			clickScore.textContent = clickCount;
-			shuffledPieces[indexOfHiddenPiece] = clickedPiece;
-			shuffledPieces[indexOfClickedPiece] = hiddenPiece;
-
-			if(audio) {
-				success.play();
-			}
-			
-			updatePositions();
-			highlightMoveablePieces();
-			checkIfHasWon();
-		}
-		else {
-			if(audio) {
-				fail.play();
-			}
-		}
-	}
-	
-	function handleKeyDown(event) {
-	
-		var indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
-		var rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
-		var colOfHiddenPiece = indexOfHiddenPiece % 3;
-		
-		switch(event.key) {
-			case 'Down': case 'ArrowDown': {
-				let rowOfClickedPiece = rowOfHiddenPiece - 1;
-				let colOfClickedPiece = colOfHiddenPiece;
-				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
-				break;
-			}
-			case 'Up': case 'ArrowUp': {
-				let rowOfClickedPiece = rowOfHiddenPiece + 1;
-				let colOfClickedPiece = colOfHiddenPiece;
-				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
-				break;
-			}
-			case 'Right': case 'ArrowRight': {
-				let rowOfClickedPiece = rowOfHiddenPiece;
-				let colOfClickedPiece = colOfHiddenPiece - 1;
-				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
-				break;
-			}
-			case 'Left': case 'ArrowLeft': {
-				let rowOfClickedPiece = rowOfHiddenPiece;
-				let colOfClickedPiece = colOfHiddenPiece + 1;
-				var indexOfClickedPiece = rowOfClickedPiece * 3 + colOfClickedPiece;
-				break;
-			}
-			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {
-				let clickedPiece = document.getElementById('piece-' + parseInt(event.key));
-				var indexOfClickedPiece = shuffledPieces.indexOf(clickedPiece);
-				break;
-			}
-			case 'c': {
-				currentState(true);
-				break;
-			}
-			case 'h': {
-				whereIsHiddenPiece(true);
-				break;
-			}
-			case 'm': {
-				whereAreTheMoveablePieces(true);
-				break;
-			}
-		}
-		
-		var clickedPiece = shuffledPieces[indexOfClickedPiece];
-		if(clickedPiece) {
-			trySwapWithHiddenPiece.call(clickedPiece, event);
-		}
-	}
-
-	addEventListener('play', playAudio(evt), true);
-	function playAudio(audioVar) {
-		if(window.$_currentlyPlaying) {
-			window.$_currentlyPlaying.pause();
-		}
-		window.$_currentlyPlaying = evt.target;
-	}
-
-	/// =============================================================================================
-	/// see https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-	/// =============================================================================================
-	function shuffle(array) {
-		var currentIndex = array.length, temporaryValue, randomIndex;
-
-		// While there remain elements to shuffle...
-		while (0 !== currentIndex) {
-
-			// Pick a remaining element...
-			randomIndex = Math.floor(Math.random() * currentIndex);
-			currentIndex -= 1;
-
-			// And swap it with the current element.
-			temporaryValue = array[currentIndex];
-			array[currentIndex] = array[randomIndex];
-			array[randomIndex] = temporaryValue;
-			
-		}
-
-		return array;
-	}
-</script>
+	<script src="grid.js"></script>
 </body>
 </html>
