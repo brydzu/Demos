@@ -1,17 +1,19 @@
-main {
+.css-grid-main {
 	display: grid;
 	grid-template-columns: 25% 50% 25%;
 	grid-template-rows: 1fr minmax(50vh, 80vh) 1fr;
-	grid-template-areas: ". intro ."
-						"game game game"
+	grid-template-areas: "game game game"
+						". intro ."
 						". tutorial .";
+	grid-gap: 10px;
+	padding-top: 10px;
 }
 
-#intro {
+.css-grid-intro {
 	grid-area: intro;
 }
 
-article {
+.css-grid-article {
 	grid-area: tutorial;
 }
 
@@ -40,7 +42,7 @@ article {
 	background: rgba(0, 0, 0, .5);
 }
 
-.puzzle-game > img {
+.puzzle-game > .puzzle-game-image {
 	width: 100%;
 	margin: 0;
 	outline: 1px solid black;
@@ -51,7 +53,7 @@ article {
 	opacity: 0;
 }
 
-.puzzle-game > img:focus {
+.puzzle-game > .puzzle-game-image:focus {
 	outline-color: red;
 }
 
@@ -73,15 +75,34 @@ article {
 	background-repeat: no-repeat;
 }
 
+/* Possibly pull out and put in root styles */
+dl {
+	margin: 1em;
+	flex-wrap: wrap;
+	max-width: 75%;
+}
+
+dt {
+	background-color: #ccc;
+}
+
+dt,
+dd {
+	padding: 5px;
+	margin: 2px;
+	border: 1px solid #ccc;
+}
+
 @media screen and (max-width: 800px) {
+
 	.puzzle-game-wrapper {
-	grid-template-columns: 50%;
-	grid-template-rows: 1fr 1fr;
-	grid-template-areas: "game"
-						"score";
-	max-height: unset;
-	background-size: fill;
-	background-repeat: no-repeat;
+		grid-template-columns: 50%;
+		grid-template-rows: 1fr 1fr;
+		grid-template-areas: "game"
+							"score";
+		max-height: unset;
+		background-size: fill;
+		background-repeat: no-repeat;
 	}
 
 	.puzzle-score {
@@ -98,4 +119,5 @@ article {
 	.palm-tree {
 		display: none;
 	}
+
 }

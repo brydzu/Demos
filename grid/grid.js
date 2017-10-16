@@ -237,35 +237,36 @@
 		const indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
 		const rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
 		const colOfHiddenPiece = indexOfHiddenPiece % 3;
+		let indexOfClickedPiece;
 
 		switch (event.key) {
 			case 'Down': case 'ArrowDown': {
 				const rowOfClickedPiece = rowOfHiddenPiece - 1;
 				const colOfClickedPiece = colOfHiddenPiece;
-				const indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
+				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
 			case 'Up': case 'ArrowUp': {
 				const rowOfClickedPiece = rowOfHiddenPiece + 1;
 				const colOfClickedPiece = colOfHiddenPiece;
-				const indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
+				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
 			case 'Right': case 'ArrowRight': {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece - 1;
-				const indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
+				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
 			case 'Left': case 'ArrowLeft': {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece + 1;
-				const indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
+				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
 			case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': {
 				const clickedPiece = document.getElementById(`piece-${parseInt(event.key)}`);
-				const indexOfClickedPiece = shuffledPieces.indexOf(clickedPiece);
+				indexOfClickedPiece = shuffledPieces.indexOf(clickedPiece);
 				break;
 			}
 			case 'c': {

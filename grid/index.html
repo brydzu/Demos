@@ -5,17 +5,43 @@
 		<link rel="stylesheet" href="https://edgeportal.blob.core.windows.net/media/demotemplate.css">
 		<link rel="stylesheet" href="style.css">
 </head>
-<body>
-	<main>
-		<section id="intro">
+<body class="css-grid">
+	<main class="css-grid-main">
+		<section class="puzzle-game-wrapper">
+			<div class="puzzle-game">
+				<img tabindex=0 id="piece-1" src="grid_1.png" class="puzzle-game-image" aria-label="The" />
+				<img tabindex=0 id="piece-2" src="grid_2.png" class="puzzle-game-image" aria-label="only" />
+				<img tabindex=0 id="piece-3" src="grid_3.png" class="puzzle-game-image" aria-label="disability" />
+				<img tabindex=0 id="piece-4" src="grid_4.png" class="puzzle-game-image" aria-label="in" />
+				<img tabindex=0 id="piece-5" src="grid_5.png" class="puzzle-game-image" aria-label="life" />
+				<img tabindex=0 id="piece-6" src="grid_6.png" class="puzzle-game-image" aria-label="is" />
+				<img tabindex=0 id="piece-7" src="grid_7.png" class="puzzle-game-image" aria-label="a" />
+				<img tabindex=0 id="piece-8" src="grid_8.png" class="puzzle-game-image" aria-label="bad" />
+				<img tabindex=0 id="piece-9" src="grid_9.png" class="puzzle-game-image" aria-label="attitude" />
+			</div>
+			<aside class="puzzle-score">
+				<p>Clicks: <span id="clicks">0</span></p>
+			</aside>
+			<div class="palm-tree" aria-role="presentation"></div>
+		</section>
+		<section class="css-grid-intro">
 				<h1>CSS Grid Paradise Puzzle</h1>
-				<p>The game consists of a 3 by 3 grid with a shuffled set of images.
-				The goal of the game is to move one of the images that is next to the open
-				space into the open space. Continue this process until the order of the images is sequential.
-				If you're doing this game audibly, you will hear the following completed quote by Scott Hamilton.</p>
-				<p>Row 1: The only disability</p>
-				<p>Row 2: in life is</p>
-				<p>Row 3: a bad attitude</p>
+				<h2>Playing the game</h2>
+				<p>
+					With the Windows Fall Creator's Update we will be shipping an updated implementation of CSS Grid.</p>
+				<p>
+					The game consists of a 3 by 3 grid with a shuffled set of images.
+					The goal of the game is to move one of the images that is next to the open
+					space into the open space. Continue this process until the order of the images is sequential.
+					If you're doing this game audibly, you will hear the following completed quote by Scott Hamilton.
+				</p>
+				
+				<ul>
+					<li>Row 1: The only disability</li>
+					<li>Row 2: in life is</li>
+					<li>Row 3: a bad attitude</li>
+				</ul>
+				
 				<p>Helpful keyboard shortcuts:</p>
 				<dl>
 					<dt>C</dt>
@@ -30,25 +56,8 @@
 						<dd>This will try to move the image with that index</dd>
 				</dl>
 				<button id="toggle-audio">Turn <span>on</span> sounds for successful/uncessful moves</button>
-			</section>
-			<section class="puzzle-game-wrapper">
-				<div class="puzzle-game">
-					<img tabindex=0 id="piece-1" src="grid_1.png" aria-label="The" />
-					<img tabindex=0 id="piece-2" src="grid_2.png" aria-label="only" />
-					<img tabindex=0 id="piece-3" src="grid_3.png" aria-label="disability" />
-					<img tabindex=0 id="piece-4" src="grid_4.png" aria-label="in" />
-					<img tabindex=0 id="piece-5" src="grid_5.png" aria-label="life" />
-					<img tabindex=0 id="piece-6" src="grid_6.png" aria-label="is" />
-					<img tabindex=0 id="piece-7" src="grid_7.png" aria-label="a" />
-					<img tabindex=0 id="piece-8" src="grid_8.png" aria-label="bad" />
-					<img tabindex=0 id="piece-9" src="grid_9.png" aria-label="attitude" />
-				</div>
-				<aside class="puzzle-score">
-					<p>Clicks: <span id="clicks">0</span></p>
-				</aside>
-				<div class="palm-tree" aria-role="presentation"></div>
-			</section>
-			<article>
+			</section>			
+			<article class="css-grid-article">
 				<h1>Building the Puzzle</h1>
 			</article>
 	</main>
