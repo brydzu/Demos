@@ -42,6 +42,9 @@
 		});
 	};
 
+	/// =============================================================================================
+	/// highlight the pieces that are moveable
+	/// =============================================================================================
 	const highlightMoveablePieces = function() {
 		const indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
 		const rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
@@ -64,6 +67,9 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Reset the game to start over
+	/// =============================================================================================
 	const reset = function() {
 		isDone = false;
 		hiddenPiece.style.opacity = '0';
@@ -92,11 +98,17 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Update the text of the audio button after clicking
+	/// =============================================================================================
 	const updateToggleButtonText = function(audioText) {
 		const span = soundButton.querySelector('span');
 		span.innerText = audioText;
 	};
 
+	/// =============================================================================================
+	/// Turn on and off audio
+	/// =============================================================================================
 	const toggleAudio = function() {
 		let audioText = '';
 		switch (audio) {
@@ -114,12 +126,18 @@
 		updateToggleButtonText(audioText);
 	};
 
+	/// =============================================================================================
+	/// A helper function to say things
+	/// =============================================================================================
 	const say = function(statement) {
 		if (window.speechSynthesis.speak) {
 			window.speechSynthesis.speak(new SpeechSynthesisUtterance(statement));
 		}
 	};
 
+	/// =============================================================================================
+	/// Determine where the hidden piece is in the 3x3 grid
+	/// =============================================================================================
 	const whereIsHiddenPiece = function(requested) {
 		const indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
 		const colOfHiddenPiece = (indexOfHiddenPiece % 3) + 1;
@@ -130,6 +148,9 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Audibly speak the current state of the game
+	/// =============================================================================================
 	const currentState = function(requested) {
 		let row1 = 'Row1: ';
 		let row2 = 'Row2: ';
@@ -159,6 +180,9 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Audibly state where the pieces that can move are
+	/// =============================================================================================
 	const whereAreTheMoveablePieces = function() {
 		let speech = 'Tiles that can move: ';
 		const tiles = document.querySelectorAll('.piece-is-moveable');
@@ -206,6 +230,9 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Handles any key presses for game purposes
+	/// =============================================================================================
 	const handleKeyDown = function(event) {
 		const indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
 		const rowOfHiddenPiece = Math.floor(indexOfHiddenPiece / 3);
@@ -264,6 +291,9 @@
 		}
 	};
 
+	/// =============================================================================================
+	/// Make it so that audio can fire quickly
+	/// =============================================================================================
 	const playAudio = function(audioVar) {
 		if (window.currentlyPlaying) {
 			window.currentlyPlaying.pause();
@@ -271,7 +301,9 @@
 		window.currentlyPlaying = audioVar.target;
 	};
 
-	// Attach listeners
+	// =============================================================================================
+	/// Init
+	/// =============================================================================================
 	addEventListener('keydown', handleKeyDown);
 	addEventListener('play', playAudio, true);
 	soundButton.addEventListener('click', toggleAudio);
@@ -281,7 +313,6 @@
 		piece.addEventListener('keypress', trySwapWithHiddenPiece);
 	}
 
-	// Init
 	reset();
 	updatePositions();
 }());
