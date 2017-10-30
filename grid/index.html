@@ -8,6 +8,10 @@
 <body class="css-grid">
 	<main class="css-grid-main">
 		<section class="puzzle-game-wrapper">
+			<header class="puzzle-header">
+				<h1 class="puzzle-title">CSS Grid Paradise Puzzle</h1>
+				<a href="#playing-the-game" class="button button--primary">Skip to instructions on playing the game</a>
+			</header>
 			<div class="puzzle-game">
 				<img tabindex=0 id="piece-1" src="grid_1.png" class="puzzle-game-image" aria-label="The" />
 				<img tabindex=0 id="piece-2" src="grid_2.png" class="puzzle-game-image" aria-label="only" />
@@ -20,15 +24,16 @@
 				<img tabindex=0 id="piece-9" src="grid_9.png" class="puzzle-game-image" aria-label="attitude" />
 			</div>
 			<aside class="puzzle-score">
-				<p>Clicks: <span id="clicks">0</span></p>
+				Clicks: <span id="clicks">0</span>
+				<p class="congratulations" aria-live="polite"></p>
 			</aside>
 			<div class="palm-tree" aria-role="presentation"></div>
 		</section>
-		<section class="css-grid-intro">
-				<h1>CSS Grid Paradise Puzzle</h1>
-				<h2>Playing the game</h2>
+		<section class="css-grid-intro">				
+				<h2 id="playing-the-game">Playing the game</h2>
 				<p>
-					With the Windows Fall Creator's Update we will be shipping an updated implementation of CSS Grid.</p>
+					With the Windows Fall Creator's Update we will be shipping an updated implementation of CSS Grid.
+				</p>
 				<p>
 					The game consists of a 3 by 3 grid with a shuffled set of images.
 					The goal of the game is to move one of the images that is next to the open
@@ -55,11 +60,10 @@
 					<dt>Numeric keys 1 through 9</dt>
 						<dd>This will try to move the image with that index</dd>
 				</dl>
-				<button id="toggle-audio">Turn <span>on</span> sounds for successful/uncessful moves</button>
-			</section>			
-			<article class="css-grid-article">
-				<h1>Building the Puzzle</h1>
-			</article>
+				<p>
+					<input type="checkbox" id="toggle-audio"><label for="toggle-audio">Turn <span>on</span> sounds for successful/unsuccessful moves</label>
+				</p>
+			</section>
 	</main>
 
 	<script src="grid.js"></script>

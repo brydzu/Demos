@@ -4,6 +4,7 @@
 	const pieces = [...document.querySelectorAll('.puzzle-game > img')];
 	const clickScore = document.getElementById('clicks');
 	const soundButton = document.getElementById('toggle-audio');
+	const congratulations = document.getElementsByClassName('congratulations')[0];
 	let shuffledPieces = pieces;
 	const hiddenPiece = pieces[6];
 	let clickCount = 0;
@@ -58,10 +59,8 @@
 			if ((colOfCurrentPiece === colOfHiddenPiece && Math.abs(rowOfHiddenPiece - rowOfCurrentPiece) === 1) ||
             (rowOfCurrentPiece === rowOfHiddenPiece && Math.abs(colOfHiddenPiece - colOfCurrentPiece) === 1)
 			) {
-				piece.style.outline = '2px solid white';
 				piece.classList.add('piece-is-moveable');
 			} else {
-				piece.style.outline = 'none';
 				piece.classList.remove('piece-is-moveable');
 			}
 		}
@@ -76,6 +75,7 @@
 
 		clickCount = 0;
 		shuffledPieces = shuffle([...pieces]);
+		congratulations.style.display = 'none';
 		updatePositions();
 		highlightMoveablePieces();
 	};
@@ -93,7 +93,9 @@
 			} else {
 				isDone = true;
 				hiddenPiece.style.opacity = '1';
-				// ADD SOMETHING TO CONGRATULATE!!
+				congratulations.style.display = 'block';
+				congratulations.focus();
+				congratulations.textContent = 'Congratulations, you have succesfully completed the puzzle!';
 			}
 		}
 	};
@@ -196,7 +198,7 @@
 	/// attempts to swap the clicked piece with the hidden piece
 	/// =============================================================================================
 	const trySwapWithHiddenPiece = function() {
-		const clickedPiece = this;
+		const clickedPiece = this || null;
 		clickedPiece.focus();
 
 		const indexOfHiddenPiece = shuffledPieces.indexOf(hiddenPiece);
@@ -240,25 +242,29 @@
 		let indexOfClickedPiece;
 
 		switch (event.key) {
-			case 'Down': case 'ArrowDown': {
+			// S
+			case 83: {
 				const rowOfClickedPiece = rowOfHiddenPiece - 1;
 				const colOfClickedPiece = colOfHiddenPiece;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			case 'Up': case 'ArrowUp': {
+			// W
+			case 87: {
 				const rowOfClickedPiece = rowOfHiddenPiece + 1;
 				const colOfClickedPiece = colOfHiddenPiece;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			case 'Right': case 'ArrowRight': {
+			// D
+			case 68: {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece - 1;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			case 'Left': case 'ArrowLeft': {
+			// A
+			case 65: {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece + 1;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;

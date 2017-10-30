@@ -1,34 +1,30 @@
-.css-grid-main {
-	display: grid;
-	grid-template-columns: 25% 50% 25%;
-	grid-template-rows: 1fr minmax(50vh, 80vh) 1fr;
-	grid-template-areas: "game game game"
-						". intro ."
-						". tutorial .";
-	grid-gap: 10px;
-	padding-top: 10px;
-}
-
-.css-grid-intro {
-	grid-area: intro;
-}
-
-.css-grid-article {
-	grid-area: tutorial;
-}
-
 .puzzle-game-wrapper {
 	display: grid;
+	min-height: 60vh;
 	grid-area: game;
-	grid-template-rows: 10% 50% 40%;
-	padding: 10px;
-	border: 2px solid black;
-	grid-template-columns: 50% 50%;
-	grid-template-areas: ". ."
-						"game score"
-						"game palm-tree";
+	grid-gap: 2%;
+	grid-template-rows: 15% 30% 45%;	
+	grid-template-columns: repeat(4, 25%);
+	grid-template-areas: ". title title ."
+						 ". game score ."
+						 ". game palm-tree .";
 	background-image: url(background.svg);
-	background-size: fill;   
+	background-size: fill;
+}
+
+.puzzle-header {
+	grid-area: title;
+}
+
+.button.button--primary {
+	background-color: #fff;
+	color: #006cc2;
+	margin-top: 2px;
+}
+
+.puzzle-title {
+	align-self: center;
+	color: #fff;
 }
 
 .puzzle-game { 
@@ -42,18 +38,18 @@
 	background: rgba(0, 0, 0, .5);
 }
 
-.puzzle-game > .puzzle-game-image {
+.puzzle-game-image {
 	width: 100%;
 	margin: 0;
-	outline: 1px solid black;
+	outline: 1px solid #000;
 	outline-offset: -1px;
 }
 
-.puzzle-game > .hidden-piece {
+.hidden-piece {
 	opacity: 0;
 }
 
-.puzzle-game > .puzzle-game-image:focus {
+.puzzle-game-image:focus {
 	outline-color: red;
 }
 
@@ -62,7 +58,7 @@
 	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 	font-size: 2em;
 	font-weight: normal;
-	color: white;
+	color: #fff;
 }
 
 .puzzle-score p {
@@ -75,7 +71,16 @@
 	background-repeat: no-repeat;
 }
 
-/* Possibly pull out and put in root styles */
+.piece-is-moveable {
+	border: 2px solid #fff;
+	outline: 1px solid #fff;
+}
+
+.congratulations {
+	display: none;
+	font-weight: bold;
+}
+
 dl {
 	margin: 1em;
 	flex-wrap: wrap;
@@ -88,26 +93,25 @@ dt {
 
 dt,
 dd {
-	padding: 5px;
-	margin: 2px;
+	padding: .5em;
 	border: 1px solid #ccc;
+}
+
+.css-grid-intro {
+	margin: 3em auto;
+	max-width: 50%;
 }
 
 @media screen and (max-width: 800px) {
 
 	.puzzle-game-wrapper {
-		grid-template-columns: 50%;
-		grid-template-rows: 1fr 1fr;
-		grid-template-areas: "game"
-							"score";
+		grid-template-columns: 10% repeat(2, 40%) 10%;
+		grid-template-areas:". title title ." 
+							". score score ."
+							". game game .";
 		max-height: unset;
-		background-size: fill;
+		background-size: cover;
 		background-repeat: no-repeat;
-	}
-
-	.puzzle-score {
-		justify-self: center;
-		width: 90%;
 	}
 
 	.puzzle-game {
@@ -118,6 +122,10 @@ dd {
 
 	.palm-tree {
 		display: none;
+	}
+
+	.css-grid-intro {
+		max-width: 80%;
 	}
 
 }
