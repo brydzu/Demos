@@ -10,8 +10,8 @@
 	let clickCount = 0;
 	let isDone = true;
 	let audio = false;
-	const success = new Audio('success.mp3');
-	const fail = new Audio('fail.mp3');
+	const success = new Audio('success.wav');
+	const fail = new Audio('failure.wav');
 
 	/// =============================================================================================
 	/// see https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
@@ -242,29 +242,25 @@
 		let indexOfClickedPiece;
 
 		switch (event.key) {
-			// S
-			case 83: {
+			case "s": {
 				const rowOfClickedPiece = rowOfHiddenPiece - 1;
 				const colOfClickedPiece = colOfHiddenPiece;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			// W
-			case 87: {
+			case "w": {
 				const rowOfClickedPiece = rowOfHiddenPiece + 1;
 				const colOfClickedPiece = colOfHiddenPiece;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			// D
-			case 68: {
+			case "d": {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece - 1;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
 				break;
 			}
-			// A
-			case 65: {
+			case "a": {
 				const rowOfClickedPiece = rowOfHiddenPiece;
 				const colOfClickedPiece = colOfHiddenPiece + 1;
 				indexOfClickedPiece = (rowOfClickedPiece * 3) + colOfClickedPiece;
