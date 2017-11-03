@@ -1,41 +1,35 @@
-.puzzle-game-wrapper {
-	display: grid;
-	min-height: 60vh;
-	grid-area: game;
-	grid-gap: 2%;
-	grid-template-rows: 15% 30% 45%;	
-	grid-template-columns: repeat(4, 25%);
-	grid-template-areas: ". title title ."
-						 ". game score ."
-						 ". game palm-tree .";
-	background-image: url(background.svg);
-	background-size: fill;
+body {
+	background: #f8dbc9;
 }
 
-.puzzle-header {
-	grid-area: title;
+/*
+ *	MAIN GAME AREA
+ *	---------------------------------------------
+ */
+
+.puzzle-game-wrapper {
+	padding: 2em;
+	background: linear-gradient(to bottom, #473f87, #d35e4e);
+}
+
+.puzzle-title {
+	color: #fff;
+}
+
+.button--primary {
+	margin-top: 1.5em;
 }
 
 .button.button--primary {
 	background-color: #fff;
 	color: #006cc2;
-	margin: 2em 0;
-}
-
-.puzzle-title {
-	align-self: center;
-	color: #fff;
 }
 
 .puzzle-game { 
 	display: grid;
-	margin: 2em 0;
-	grid-area: game;
-	align-self: start;
-	justify-self: center;
-	max-width: 35vw;
-	border: 10px solid cornflowerblue;
-	grid: 1fr 1fr 1fr / 1fr 1fr 1fr;        
+	grid: 1fr 1fr 1fr / 1fr 1fr 1fr;
+	margin: 2em auto;
+	outline: 5px solid #7a8af9;      
 	background: rgba(0, 0, 0, .5);
 }
 
@@ -54,77 +48,146 @@
 	outline-color: red;
 }
 
-.puzzle-score {
-	grid-area: score;
-	font-size: 2em;
-	font-weight: normal;
-	color: #fff;
-}
-
-.puzzle-score p {
-	margin: 0;
-}
-
-.palm-tree {
-	grid-area: palm-tree;
-	background-image: url(grid_game_extra_palm.png);
-	background-repeat: no-repeat;
-}
-
 .piece-is-moveable {
 	border: 2px solid #fff;
 	outline: 1px solid #fff;
 }
 
+.puzzle-score {
+	display: inline-block;
+	max-width: 12em;
+	padding: .5em;
+	font-weight: 300;
+	font-size: 1.6em;
+	background: rgba(0, 0, 0, .5);
+	color: #fff;
+}
+
+.puzzle-score p {
+	margin: .5em 0 0;
+}
+
 .congratulations {
 	display: none;
-	font-weight: bold;
 }
 
-dl {
-	margin: 2em 0;
-	flex-wrap: wrap;
+.palm-tree {
+	display: none;
 }
 
-dt {
-	background-color: #ccc;
+@media screen and (max-width: 50em) {
+	.puzzle-game-wrapper > *,
+	.demo-info > * {
+		margin-right: auto;
+		margin-left: auto;
+		max-width: 100vmin; /* Always fit entire gameboard on screen */
+	}
 }
 
-dt,
-dd {
-	padding: .5em;
-	border: 1px solid #ccc;
+@media screen and (min-width: 40em) {
+	.puzzle-title,
+	.button {
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	.button {
+		margin: 0 0 0 2em;
+	}
 }
 
-.css-grid-content {
-	margin: 3em auto;
-	max-width: 50%;
-}
-
-@media screen and (max-width: 800px) {
-
+@media screen and (min-width: 50em) {
 	.puzzle-game-wrapper {
-		grid-template-columns: 10% repeat(2, 40%) 10%;
-		grid-template-areas:". title title ." 
-							". score score ."
-							". game game .";
-		max-height: unset;
-		background-size: cover;
-		background-repeat: no-repeat;
+		display: grid;
+		grid-gap: 0 2em;
+		grid-template-rows: auto 30vmin 30vmin;
+		grid-template-columns: 5% 60vmin auto auto 5%;
+		grid-template-areas: ". title title title ."
+												 ". game  score palm  ."
+												 ". game  score palm  .";
+		padding: 0;
+		background: linear-gradient(to top, #eca06f, #eca06f 5vmin, #615aa1 5vmin, #8f5473, #b74e4b 30vmin, #c5814d 30vmin, #d35e4e 39.6vmin, #473f87 70vmin, #473f87);
+	}
+
+	.puzzle-header {
+		grid-area: title;
+		padding: 4em 0 10vmin;
 	}
 
 	.puzzle-game {
-		width: 90%;
-		max-width: 90%;
-		margin-top: 10px;
+		grid-area: game;
+
+		display: grid;
+		margin: 0;
+		outline: 10px solid cornflowerblue;
+		width: 60vmin;
+		height: 60vmin;
 	}
 
+	.puzzle-score {
+		grid-area: score;
+		justify-self: center;
+		align-self: center;
+	}
+}
+
+@media screen and (min-width: 60em) {
 	.palm-tree {
-		display: none;
+		display: block;
+		grid-area: palm;
+		justify-self: end;
+		align-self: end;
+		margin-bottom: 2vmin;
+		max-height: 75%;
+	}
+}
+
+/*
+ *	INSTRUCTIONS / WRITE-UP
+ *	---------------------------------------------
+ */
+
+.demo-info {
+	margin: 0 5% 4.8rem 5%;
+}
+
+.demo-info a:link,
+.demo-info a:visited {
+	border-bottom: 1px solid;
+	color: #000;
+}
+
+.demo-info a:hover {
+	border-bottom: 0;
+	text-decoration: none;
+}
+
+dl {
+	display: grid;
+	grid-gap: 1em 0;
+	grid-template-columns: fit-content(4em) auto;
+}
+
+dt, dd {
+	padding-bottom: 1em;
+	border-bottom: 1px solid rgba(0, 0, 0, .25);
+}
+
+dt {
+	padding-right: 1em;
+	text-align: center;
+}
+
+@media screen and (min-width: 50em) {
+	.demo-info {
+		margin: 0;
+		padding: 10em 2em 0; /* Account for grid gap in main game area and line up correctly */
+		background: linear-gradient(to bottom, #eca06f, #eca06f 6em, #f8dbc9 15em, #f8dbc9);
 	}
 
-	.css-grid-content {
-		max-width: 80%;
+	.demo-info > * {
+		margin-right: 5%;
+		margin-left: 5%;
+		max-width: 54em;
 	}
-
 }

@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
-		<title>CSS Grid Paradize Puzzle</title>
-		<link rel="stylesheet" href="https://edgeportal.blob.core.windows.net/media/demotemplate.css">
-		<link rel="stylesheet" href="style.css">
+	<meta charset="utf-8">
+	<title>CSS Grid Paradize Puzzle</title>
+	<link rel="stylesheet" href="https://edgeportal.blob.core.windows.net/media/demotemplate.css">
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<main>
@@ -27,60 +28,65 @@
 				Clicks: <span id="clicks">0</span>
 				<p class="congratulations" aria-live="polite"></p>
 			</aside>
-			<div class="palm-tree" aria-role="presentation"></div>
+			<img class="palm-tree" src="grid_game_extra_palm.svg" aria-role="presentation" />
 		</section>
-		<section class="css-grid-content">
-				<h2 id="playing-the-game">How to play</h2>
-				<p>
-					With the Windows Fall Creator's Update we will be shipping an updated implementation of CSS Grid.
-				</p>
-				<p>
-					The game consists of a 3 by 3 grid with a shuffled set of images.
-					The goal of the game is to move one of the images that is next to the open
-					space into the open space. Continue this process until the order of the images is sequential.
-					If you're doing this game audibly, you will hear the following completed quote by Scott Hamilton.
-				</p>
-				
-				<ul>
-					<li>Row 1: The only disability</li>
-					<li>Row 2: in life is</li>
-					<li>Row 3: a bad attitude</li>
-				</ul>
-				
-				<p>Helpful keyboard shortcuts:</p>
-				<dl>
-					<dt>C</dt>
-						<dd>This will audibly outline the current state of the game telling you which pieces are in each row</dd>
-					<dt>H</dt>
-						<dd>This will audibly tell you in which row and column the open space is</dd>
-					<dt>M</dt>
-						<dd>This will audibly tell you which pieces are possible to move into the open space</dd>
-					<dt>w</dt>
-						<dd>This will move the piece below the empty space up up into the available space</dd>
-					<dt>a</dt>
-						<dd>This will move the piece to the right of the empty space into the available space</dd>
-					<dt>s</dt>
-						<dd>This will move the piece above the empty space down into the available space</dd>
-					<dt>d</dt>
-						<dd>This will move the piece to the left of the empty space into the available space</dd>
-					<dt>w, a, s, d</dt>
-						<dd>This will move the piece that is able to move in that direction. For example, if you press the up arrow key the piece that is directly below the open space will move up.</dd>
-					<dt>Numeric keys 1 through 9</dt>
-						<dd>This will try to move the image with that index</dd>
-				</dl>
-				<p>
-					<input type="checkbox" id="toggle-audio"><label for="toggle-audio">Turn <span>on</span> sounds for successful/unsuccessful moves</label>
-				</p>
-		</section>
-		<section class="css-grid-content">
-				<h2 id="css-grid-resources">CSS Grid Resources</h2>
-				<ul>
-					<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout" target="_blank">CSS Grid MDN Docs</a></li>
-					<li><a href="https://gridbyexample.com/" target="_blank">Grid by Example</a>: An extensive set of Grid tutorials and examples by Rachel Andrew</li>
-					<li><a href="http://cssgridgarden.com/" target="_blank">CSS Grid Garden</a>: Learn CSS Grid the fun way, created by <a href="https://codepip.com/" target="_blank">Codepip</a></li>
-					<li><a href="https://alistapart.com/article/the-story-of-css-grid-from-its-creators">The story of CSS Grid from its creators</a>: Learn the story about CSS Grid's origin and evolution by Aaron Gustafson</li>
-				</ul>
-		</section>
+		<div class="demo-info">
+			<section class="section css-grid-content">
+					<h2 id="playing-the-game">How to play</h2>
+					<p>
+						With the Windows Fall Creator's Update we will be shipping an updated implementation of CSS Grid.
+					</p>
+					<p>
+						The game consists of a 3 by 3 grid with a shuffled set of images.
+						The goal of the game is to move one of the images that is next to the open
+						space into the open space. Continue this process until the order of the images is sequential.
+						If you're doing this game audibly, you will hear the following completed quote by Scott Hamilton.
+					</p>
+					
+					<ul>
+						<li>Row 1: The only disability</li>
+						<li>Row 2: in life is</li>
+						<li>Row 3: a bad attitude</li>
+					</ul>
+					
+					<h3>Options</h3>
+					<p>
+						<input type="checkbox" id="toggle-audio"><label for="toggle-audio">Turn <span>on</span> sounds for successful/unsuccessful moves</label>
+					</p>
+
+					<h3>Helpful keyboard shortcuts</h3>
+					<dl>
+						<dt>C</dt>
+							<dd>This will audibly outline the current state of the game telling you which pieces are in each row</dd>
+						<dt>H</dt>
+							<dd>This will audibly tell you in which row and column the open space is</dd>
+						<dt>M</dt>
+							<dd>This will audibly tell you which pieces are possible to move into the open space</dd>
+						<dt>w</dt>
+							<dd>This will move the piece below the empty space up up into the available space</dd>
+						<dt>a</dt>
+							<dd>This will move the piece to the right of the empty space into the available space</dd>
+						<dt>s</dt>
+							<dd>This will move the piece above the empty space down into the available space</dd>
+						<dt>d</dt>
+							<dd>This will move the piece to the left of the empty space into the available space</dd>
+						<dt>w, a, s, d</dt>
+							<dd>This will move the piece that is able to move in that direction. For example, if you press the up arrow key the piece that is directly below the open space will move up.</dd>
+						<dt>Numeric keys 1–9</dt>
+							<dd>This will try to move the image with that index</dd>
+					</dl>
+					
+			</section>
+			<section class="section css-grid-content">
+					<h2 id="css-grid-resources">CSS Grid Resources</h2>
+					<ul>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout" target="_blank">CSS Grid MDN Docs</a></li>
+						<li><a href="https://gridbyexample.com/" target="_blank">Grid by Example</a>: An extensive set of Grid tutorials and examples by Rachel Andrew</li>
+						<li><a href="http://cssgridgarden.com/" target="_blank">CSS Grid Garden</a>: Learn CSS Grid the fun way, created by <a href="https://codepip.com/" target="_blank">Codepip</a></li>
+						<li><a href="https://alistapart.com/article/the-story-of-css-grid-from-its-creators">The story of CSS Grid from its creators</a>: Learn the story about CSS Grid's origin and evolution by Aaron Gustafson</li>
+					</ul>
+			</section>
+		</div>
 	</main>
 
 	<script src="grid.js"></script>

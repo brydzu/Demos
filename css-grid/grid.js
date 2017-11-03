@@ -95,7 +95,7 @@
 				hiddenPiece.style.opacity = '1';
 				congratulations.style.display = 'block';
 				congratulations.focus();
-				congratulations.textContent = 'Congratulations, you have succesfully completed the puzzle!';
+				congratulations.textContent = 'Congrats, you solved the puzzle!';
 			}
 		}
 	};
